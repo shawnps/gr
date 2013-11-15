@@ -1,6 +1,5 @@
-development status: incomplete
-
-gr
-==
+# gr
 
 Goodreads API client
+
+Development status: incomplete
