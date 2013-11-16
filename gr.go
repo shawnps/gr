@@ -73,5 +73,19 @@ func (g *Goodreads) getRequest(params map[string]string, endpoint string) ([]byt
 	if err != nil {
 		return nil, err
 	}
-	return resp, nil
+	return body, nil
+}
+
+func (g *Goodreads) SearchBooks(q string) (GoodreadsResponse, error) {
+	p := map[string]string{"q": q}
+	var gr GoodreadsResponse
+	resp, err := g.getRequest(p, "search.xml")
+	if err != nil {
+		return GoodreadsResponse{}, err
+	}
+	err = xml.Unmarshal(resp, &gr)
+	if err != nil {
+		return GoodreadsResponse{}, err
+	}
+	return gr, nil
 }
