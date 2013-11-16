@@ -1,8 +1,60 @@
 package gr
 
+import (
+	"encoding/xml"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+)
+
+const apiURL = "https://www.goodreads.com/"
+
 type Goodreads struct {
 	Key    string
 	Secret string
+}
+
+type Author struct {
+	Id   int
+	Name string
+}
+
+type GoodreadsResponse struct {
+	Search Search
+	Query  string
+}
+
+type Search struct {
+	ResultsStart     int `xml:"results-start"`
+	ResultsEnd       int `xml:"results-end"`
+	TotalResults     int `xml:"total-results"`
+	Source           string
+	QueryTimeSeconds float64 `xml:"query-time-seconds"`
+	Results          Results
+}
+
+type Results struct {
+	Works []Work
+}
+
+type Work struct {
+	BooksCount               int `xml:"books_count"`
+	Id                       int
+	OriginalPublicationDay   int      `xml:"original_publication_day",omitempty`
+	OriginalPublicationMonth int      `xml:"original_publication_month",omitempty`
+	OriginalPublicationYear  int      `xml:"original_publication_year",omitempty`
+	RatingsCount             int      `xml:"ratings_count"`
+	TextReviewsCount         int      `xml:"text_reviews_count"`
+	AverageRating            float64  `xml:"average_rating"`
+	BestBook                 BestBook `xml:"best_book"`
+}
+
+type BestBook struct {
+	Id            int
+	Title         string
+	Author        Author
+	ImageURL      string `xml:"image_url"`
+	SmallImageURL string `xml:"small_image_url"`
 }
 
 func (g *Goodreads) getRequest(params map[string]string, endpoint string) ([]byte, error) {
