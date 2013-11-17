@@ -15,44 +15,46 @@ type Goodreads struct {
 }
 
 type Author struct {
-	Id   int
-	Name string
+	Id   int    `xml:"id"`
+	Name string `xml:"name"`
 }
 
 type GoodreadsResponse struct {
-	Search Search
-	Query  string
+	Search Search `xml:"search"`
+	Query  string `xml:"query"`
 }
 
 type Search struct {
-	ResultsStart     int `xml:"results-start"`
-	ResultsEnd       int `xml:"results-end"`
-	TotalResults     int `xml:"total-results"`
-	Source           string
+	ResultsStart     int     `xml:"results-start"`
+	ResultsEnd       int     `xml:"results-end"`
+	TotalResults     int     `xml:"total-results"`
+	Source           string  `xml:"source"`
 	QueryTimeSeconds float64 `xml:"query-time-seconds"`
-	Results          Results
+	Works            []Work  `xml:"results>work"`
 }
 
 type Results struct {
-	Works []Work
+	Works []Work `xml:"work"`
 }
 
 type Work struct {
-	BooksCount               int `xml:"books_count"`
-	Id                       int
-	OriginalPublicationDay   int      `xml:"original_publication_day",omitempty`
-	OriginalPublicationMonth int      `xml:"original_publication_month",omitempty`
-	OriginalPublicationYear  int      `xml:"original_publication_year",omitempty`
-	RatingsCount             int      `xml:"ratings_count"`
-	TextReviewsCount         int      `xml:"text_reviews_count"`
-	AverageRating            float64  `xml:"average_rating"`
-	BestBook                 BestBook `xml:"best_book"`
+	BooksCount int `xml:"books_count"`
+	Id         int `xml:"id"`
+	/* TODO: figure out how to unmarshal XML into interface{}
+	OriginalPublicationDay   interface{}      `xml:"original_publication_day,omitempty"`
+	OriginalPublicationMonth interface{}      `xml:"original_publication_month,omitempty"`
+	OriginalPublicationYear  interface{}      `xml:"original_publication_year,omitempty"`
+	*/
+	RatingsCount     int      `xml:"ratings_count"`
+	TextReviewsCount int      `xml:"text_reviews_count"`
+	AverageRating    float64  `xml:"average_rating"`
+	BestBook         BestBook `xml:"best_book"`
 }
 
 type BestBook struct {
-	Id            int
-	Title         string
-	Author        Author
+	Id            int    `xml:"id"`
+	Title         string `xml:"title"`
+	Author        Author `xml:"author"`
 	ImageURL      string `xml:"image_url"`
 	SmallImageURL string `xml:"small_image_url"`
 }
