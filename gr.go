@@ -10,6 +10,7 @@ import (
 const apiURL = "https://www.goodreads.com/"
 
 type Goodreads struct {
+	Client http.Client
 	Key    string
 	Secret string
 }
@@ -66,7 +67,7 @@ func (g *Goodreads) getRequest(params map[string]string, endpoint string) ([]byt
 		v.Set(key, val)
 	}
 	u := apiURL + endpoint + "?" + v.Encode()
-	resp, err := http.Get(u)
+	resp, err := g.Client.Get(u)
 	if err != nil {
 		return nil, err
 	}
