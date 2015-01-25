@@ -16,7 +16,7 @@ type Goodreads struct {
 }
 
 type Author struct {
-	Id   int    `xml:"id"`
+	ID   int    `xml:"id"`
 	Name string `xml:"name"`
 }
 
@@ -40,7 +40,7 @@ type Results struct {
 
 type Work struct {
 	BooksCount int `xml:"books_count"`
-	Id         int `xml:"id"`
+	ID         int `xml:"id"`
 	/* TODO: figure out how to unmarshal XML into interface{}
 	OriginalPublicationDay   interface{}      `xml:"original_publication_day,omitempty"`
 	OriginalPublicationMonth interface{}      `xml:"original_publication_month,omitempty"`
@@ -53,7 +53,7 @@ type Work struct {
 }
 
 type BestBook struct {
-	Id            int    `xml:"id"`
+	ID            int    `xml:"id"`
 	Title         string `xml:"title"`
 	Author        Author `xml:"author"`
 	ImageURL      string `xml:"image_url"`
